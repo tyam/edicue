@@ -78,6 +78,9 @@ class Dispatcher {
 
     public function __invoke($event) {
         $eventClass = get_class($event);
+        if (! isset($this->map[$eventClass])) {
+            return;
+        }
         foreach ($this->map[$eventClass] as $handler) {
             if (is_string($handler) || (is_array($handler) && is_string($handler[0]))) {
                 // lazy one.
